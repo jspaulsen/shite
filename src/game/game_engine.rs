@@ -4,7 +4,7 @@ use sdl2;
 
 /// This is the main GameEngine object which maintains all of the game state
 /// and resources as well as provides the necessary logic for running the game.
-// TODO: Abstract SDL (video) contexts
+// TODO(#1): Abstract SDL (video) contexts
 // SDL and related fields are likely not what we want to pass around;
 // create an abstraction around them.
 pub struct GameEngine {
