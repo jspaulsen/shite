@@ -1,4 +1,4 @@
-// TODO: Implement default Renderable
+// TODO(#3): Implement default Renderable
 // This will provide a basic implementation for rendering objects
 pub trait Renderable {
     fn render(&self /* camera/world */) {}
