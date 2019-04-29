@@ -3,7 +3,7 @@ use super::window_builder::WindowBuilder;
 
 use sdl2;
 
-// TODO: Support multiple windows
+// TODO(#8): Support multiple windows
 // Support multiple windows.  Currently only supports a single window.
 pub struct WindowHandler {
     pub video_subsystem: sdl2::VideoSubsystem,
