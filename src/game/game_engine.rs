@@ -9,7 +9,7 @@ pub struct GameEngine {
     pub window_handler: window_handler::WindowHandler,
 }
 
-// TODO: Introduce builder pattern for GameEngine
+// TODO(#6): Introduce builder pattern for GameEngine
 impl GameEngine {
     /// Returns an instance of the GameEngine object.
     ///
