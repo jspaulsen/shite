@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 shite = { path = "../../shite" }
+sdl2 = "0.32.2"
