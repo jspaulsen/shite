@@ -23,9 +23,6 @@ impl GameEngine {
     ///
     /// # Returns
     /// Result<Self, String>
-    // TODO(#2): Window creation should be in abstraction layer
-    // This should be a feature of the SDL abstraction layer and not arguments.
-    // This is a dependency of ticket: `Abstract SDL (video) contexts`
     pub fn new(
         title: &str,
         width: u32,
