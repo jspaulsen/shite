@@ -2,9 +2,12 @@ use std::slice::Iter;
 
 use crate::game::Renderable;
 
+
 pub type BoxedRenderable = Box<Renderable>;
 
-pub trait State {
+
+pub trait GameState {
+    fn get_state_name(&self) -> &str;
     /// Returns an iterator of Renderable objects
     ///
     /// # Arguments
