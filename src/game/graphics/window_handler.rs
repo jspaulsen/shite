@@ -11,7 +11,7 @@ pub struct WindowHandler {
 }
 
 
-// TODO: Expand WindowHandler to allow more options (if necessary)
+// TODO(#9): Expand WindowHandler to allow more options (if necessary)
 // Expand to allow more options for main window (if necessary)
 impl WindowHandler {
     pub fn new(
