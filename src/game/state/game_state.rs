@@ -7,7 +7,15 @@ pub type BoxedRenderable = Box<Renderable>;
 
 
 pub trait GameState {
-    fn get_state_name(&self) -> &str;
+    /// Returns the name of the GameState instance.  This is used for lookup
+    /// and must be unique.
+    ///
+    /// Arguments:
+    ///     None
+    //
+    /// Returns
+    fn get_state_name(&self) -> String;
+
     /// Returns an iterator of Renderable objects
     ///
     /// # Arguments
@@ -16,6 +24,7 @@ pub trait GameState {
     /// # Returns
     /// Iter<BoxedRenderable>
     fn get_renderable(&self) -> Iter<BoxedRenderable>;
+
     /// Generically handles rendering objects within returned
     /// by the state object
     ///
