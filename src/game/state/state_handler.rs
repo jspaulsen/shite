@@ -6,7 +6,7 @@ use super::game_state::GameState;
 pub type BoxedGameState = Box<GameState>;
 
 pub struct StateHandler {
-    // TODO: [StateHandler] This could be a bottleneck
+    // TODO(#13): [StateHandler] This could be a bottleneck
     // Using a HashMap to lookup & maintain states is likely a bottleneck.
     active: String,
     game_states: HashMap<String, BoxedGameState>,
