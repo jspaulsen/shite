@@ -5,7 +5,6 @@ use super::game_state::GameState;
 
 pub type BoxedGameState = Box<GameState>;
 
-// TODO(#10): Implement StateHandler
 pub struct StateHandler {
     // TODO: [StateHandler] This could be a bottleneck
     // Using a HashMap to lookup & maintain states is likely a bottleneck.
