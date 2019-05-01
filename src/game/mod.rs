@@ -8,4 +8,4 @@ mod handler;
 pub use self::state::*;
 pub use self::object::*;
 pub use self::graphics::*;
-pub use self::game_engine::GameEngine;
+pub use self::game_engine::*;

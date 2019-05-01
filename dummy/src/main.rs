@@ -2,24 +2,14 @@ use std::slice::Iter;
 
 use sdl2::pixels::Color;
 
-use shite::game::GameEngine;
+use shite::game::{GameEngine, GameEngineBuilder};
 
 fn main() {
-    let mut game: GameEngine = GameEngine::new(
+    let mut engine: GameEngine = GameEngineBuilder::new(
         "Poopster",
         800,
         600,
-    ).unwrap();
+    ).build().unwrap();
 
-    loop {
-        let mut window = game.window_handler.get_mut_window().unwrap().get_canvas_mut();
-
-        window.clear();
-
-        window.set_draw_color(
-            Color::RGB(255, 0, 0),
-        );
-
-        window.present();
-    }
+    engine.run();
 }
