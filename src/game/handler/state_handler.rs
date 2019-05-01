@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use super::game_state::GameState;
+use crate::game::state::GameState;
 
 
 pub type BoxedGameState = Box<GameState>;

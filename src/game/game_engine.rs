@@ -1,4 +1,4 @@
-use super::graphics::window_handler;
+use super::handler::window_handler;
 
 use sdl2;
 

@@ -1,5 +1,5 @@
-use super::window;
-use super::window_builder::WindowBuilder;
+use crate::game::graphics::Window;
+use crate::game::graphics::WindowBuilder;
 
 use sdl2;
 
@@ -7,7 +7,7 @@ use sdl2;
 // Support multiple windows.  Currently only supports a single window.
 pub struct WindowHandler {
     pub video_subsystem: sdl2::VideoSubsystem,
-    main_window: window::Window,
+    main_window: Window,
 }
 
 
@@ -33,11 +33,11 @@ impl WindowHandler {
         })
     }
 
-    pub fn get_main_window(&self) -> &window::Window {
+    pub fn get_main_window(&self) -> &Window {
         &self.main_window
     }
 
-    pub fn get_main_window_mut(&mut self) -> &mut window::Window {
+    pub fn get_main_window_mut(&mut self) -> &mut Window {
         &mut self.main_window
     }
 }
