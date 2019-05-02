@@ -12,7 +12,7 @@ pub struct EventHandler {
     event_subsystem: EventSubsystem,
 }
 
-// TODO: Track Input (M/KB) state here
+// TODO(#17): Track Input (M/KB) state here
 // Track Keyboard and mouse (and maybe joystick) state here
 // as passing KeyboardState as a parameter within match => won't work.
 impl EventHandler {
