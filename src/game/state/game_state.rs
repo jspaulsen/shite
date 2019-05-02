@@ -1,12 +1,13 @@
-use std::slice::Iter;
+use sdl2::event::Event;
 
 use crate::game::Renderable;
 
 
 pub type BoxedRenderable = Box<Renderable>;
+pub type BoxedGameState = Box<GameState>;
 
 
-pub trait GameState {
+pub trait GameState: GameEventHandler {
     /// Returns the name of the GameState instance.  This is used for lookup
     /// and must be unique.
     ///
@@ -15,7 +16,7 @@ pub trait GameState {
     //
     /// Returns
     fn get_state_name(&self) -> String;
-
+}
     /// Returns an iterator of Renderable objects
     ///
     /// # Arguments
@@ -23,7 +24,7 @@ pub trait GameState {
     ///
     /// # Returns
     /// Iter<BoxedRenderable>
-    fn get_renderable(&self) -> Iter<BoxedRenderable>;
+    //fn get_renderable(&self) -> Iter<BoxedRenderable>;
 
     /// Generically handles rendering objects within returned
     /// by the state object
@@ -34,6 +35,7 @@ pub trait GameState {
     /// # Returns
     /// None
     // TODO(#4): update parameters will change
+    /*
     fn update(&self) {
         let renderable = self.get_renderable();
 
@@ -43,9 +45,15 @@ pub trait GameState {
             }
         }
     }
-}
+    */
 
 
 pub trait GameEventHandler {
-    
+    fn on_key_down(&mut self, event: &Event);
+    fn on_key_up(&mut self, event: &Event);
+    fn on_mouse_motion(&mut self, event: &Event);
+    fn on_mouse_button_down(&mut self, event: &Event);
+    fn on_mouse_button_up(&mut self, event: &Event);
+    fn on_mouse_wheel(&mut self, event: &Event);
+    //fn on_window_event(&mut self, event: &Event, window: &Window);
 }

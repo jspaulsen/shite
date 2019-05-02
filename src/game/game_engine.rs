@@ -29,7 +29,8 @@ impl GameEngine {
 
     pub fn run(&mut self) -> Result<(), String> {
         loop {
-            self.event_handler.handle_sdl_events()?;
+            let active_state = self.state_handler.get_active_mut().ok_or("No active_state set!")?;
+            self.event_handler.handle_sdl_events(active_state)?;
         }
     }
 }
