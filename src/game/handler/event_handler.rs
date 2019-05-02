@@ -25,7 +25,7 @@ impl EventHandler {
 
     pub fn handle_sdl_events(&mut self, game_state: &mut BoxedGameState) -> Result<(), String> {
         for event in &mut self.event_pump.poll_iter() {
-            // TODO: [EventHandler] Implement all events
+            // TODO(#18): [EventHandler] Implement all events
             match event {
                 // TODO: Route events to higher level
                 // These should be routed to a higher level "Application" level
