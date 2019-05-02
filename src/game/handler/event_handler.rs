@@ -27,7 +27,7 @@ impl EventHandler {
         for event in &mut self.event_pump.poll_iter() {
             // TODO(#18): [EventHandler] Implement all events
             match event {
-                // TODO: Route events to higher level
+                // TODO(#19): Route events to higher level
                 // These should be routed to a higher level "Application" level
                 // provided to the game engine on creation
                 Event::Quit {..} => {
