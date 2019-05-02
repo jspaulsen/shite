@@ -5,7 +5,7 @@ use sdl2::event::Event;
 
 use crate::game::BoxedGameState;
 
-// TODO: [EventHandler] Don't ignore dead_code
+// TODO(#16): [EventHandler] Don't ignore dead_code
 #[allow(dead_code)]
 pub struct EventHandler {
     event_pump: EventPump,
