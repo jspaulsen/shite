@@ -1,4 +1,4 @@
-use super::handler::{WindowHandler, EventHandler};
+use super::handler::{WindowHandler, EventHandler, StateHandler, BoxedGameState};
 
 use sdl2;
 
@@ -7,13 +7,17 @@ use sdl2;
 pub struct GameEngine {
     pub event_handler: Box<EventHandler>,
     pub sdl_context: sdl2::Sdl,
+    pub state_handler: StateHandler,
     pub window_handler: WindowHandler,
 }
 
+#[derive(Default)]
 pub struct GameEngineBuilder {
     title: String,
     width: u32,
     height: u32,
+    game_states: Vec<BoxedGameState>,
+    active_state: String,
 }
 
 
@@ -45,8 +49,25 @@ impl GameEngineBuilder {
         Self {
             title: title.to_string(),
             width,
-            height
+            height,
+            game_states: Vec::new(),
+            active_state: "".to_string(),
         }
+    }
+
+    pub fn set_active_game_state(mut self, name: String) -> Self {
+        self.active_state = name;
+        self
+    }
+
+    pub fn add_game_state(mut self, game_state: BoxedGameState) -> Self {
+        self.game_states.push(game_state);
+        self
+    }
+
+    pub fn add_multi_game_states(mut self, game_states: &mut Vec<BoxedGameState>) -> Self {
+        self.game_states.append(game_states);
+        self
     }
 
     /// Builds the GameEngine
@@ -58,6 +79,7 @@ impl GameEngineBuilder {
             self.width,
             self.height,
         )?;
+
         let event_handler = EventHandler::new(
             sdl_context.event()?,
             sdl_context.event_pump()?,
@@ -67,6 +89,7 @@ impl GameEngineBuilder {
             sdl_context,
             window_handler,
             event_handler: Box::new(event_handler),
+            state_handler: StateHandler::new(self.active_state, self.game_states),
         })
     }
 }

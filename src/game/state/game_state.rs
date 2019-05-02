@@ -44,3 +44,8 @@ pub trait GameState {
         }
     }
 }
+
+
+pub trait GameEventHandler {
+    
+}
