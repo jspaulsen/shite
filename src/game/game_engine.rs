@@ -1,6 +1,10 @@
-use super::handler::{WindowHandler, EventHandler, StateHandler, BoxedGameState};
-
+use nphysics2d::world::{World};
 use sdl2;
+
+use super::handler::{WindowHandler, EventHandler, StateHandler, BoxedGameState};
+use super::{GameWorld};
+
+
 
 /// This is the main GameEngine object which maintains all of the game state
 /// and resources as well as provides the necessary logic for running the game.
@@ -9,6 +13,7 @@ pub struct GameEngine {
     pub sdl_context: sdl2::Sdl,
     pub state_handler: StateHandler,
     pub window_handler: WindowHandler,
+    pub world: GameWorld,
 }
 
 #[derive(Default)]
@@ -91,6 +96,7 @@ impl GameEngineBuilder {
             window_handler,
             event_handler: Box::new(event_handler),
             state_handler: StateHandler::new(self.active_state, self.game_states),
+            world: World::new(),
         })
     }
 }

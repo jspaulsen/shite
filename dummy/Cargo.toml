@@ -7,3 +7,6 @@ edition = "2018"
 [dependencies]
 shite = { path = "../../shite" }
 sdl2 = "0.32.2"
+nphysics2d = "0.11.1"
+ncollide2d = "0.19.1"
+nalgebra = "0.18.0"
