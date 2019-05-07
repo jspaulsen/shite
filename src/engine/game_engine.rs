@@ -37,7 +37,7 @@ impl GameEngine {
             self.events.process_sdl_events(game_state, &mut self.context)?;
             // TODO(#20): Use FPS (as current rendering is variable)
 
-            // TODO: Implement variable dt
+            // TODO(#21): Implement variable dt
             self.context.world.step();
             self.events.process_physics_events(game_state, &mut self.context)?;
 
