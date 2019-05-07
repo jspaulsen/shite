@@ -10,3 +10,4 @@ sdl2 = "0.32.2"
 nphysics2d = "0.11.1"
 ncollide2d = "0.19.1"
 nalgebra = "0.18.0"
+uuid = { version = "0.7.4", features = ["v4"] }
