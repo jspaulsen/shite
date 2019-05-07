@@ -28,7 +28,7 @@ impl GameEvents {
 
     pub fn process_sdl_events(&mut self, game_state: &mut GameState, context: &mut Context) -> Result<(), String> {
         for event in self.event_pump.poll_iter() {
-            // TODO: [GameEvents] Implement all events
+            // TODO(#22): [GameEvents] Implement all events
             match event {
                 // TODO: [GameEvents] Route events to higher level
                 // These should be routed to a higher level "Application" level
