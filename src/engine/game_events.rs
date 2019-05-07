@@ -30,7 +30,7 @@ impl GameEvents {
         for event in self.event_pump.poll_iter() {
             // TODO(#22): [GameEvents] Implement all events
             match event {
-                // TODO: [GameEvents] Route events to higher level
+                // TODO(#23): [GameEvents] Route events to higher level
                 // These should be routed to a higher level "Application" level
                 // provided to the game engine on creation
                 Event::Quit {..} => {
