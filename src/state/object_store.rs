@@ -6,7 +6,7 @@ use uuid::Uuid;
 use crate::trackable::Trackable;
 
 
-// TODO: [GameObjectStore] HashMap is bottleneck
+// TODO(#24): [GameObjectStore] HashMap is bottleneck
 // Optimize by using Hashbrown or comparable
 #[derive(Default)]
 pub struct GameObjectStore<T> {
