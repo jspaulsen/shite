@@ -26,10 +26,6 @@ pub struct GameEngineBuilder {
 }
 
 impl GameEngine {
-    // TODO(#7): Implement GameEngine->run function
-    // Run function runs the actual loop.  This will likely require
-    // new() parameters to change as result & incorporate ticks_per_second
-    // and (eventually) variable or fixed
 
     pub fn run<T: GameState>(&mut self, game_state: &mut T) -> Result<(), String> {
         let mut fps = FpsClock::new(self.fps);
