@@ -12,7 +12,7 @@ pub trait GameState: GameEventHandler {
     fn draw(&mut self, context: &mut Context) -> Result<(), String>;
 }
 
-// TODO: [GameEventHandler] use -> Result<(), String>;
+// TODO(#25): [GameEventHandler] use -> Result<(), String>;
 pub trait GameEventHandler {
     fn on_key_down(&mut self, context: &mut Context, event: &Event);
     fn on_key_up(&mut self, context: &mut Context, event: &Event);
