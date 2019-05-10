@@ -1,3 +1,4 @@
+use nphysics2d::object::ColliderHandle;
 use sdl2::event::Event;
 use sdl2::mouse::MouseButton;
 use sdl2::pixels::Color;
@@ -29,8 +30,7 @@ impl DummyState {
 }
 
 impl GameEventHandler for DummyState {
-    fn on_key_down(&mut self, context: &mut Context, event: &Event) {
-        println!("on_key_down: {:?}", event);
+    fn on_key_down(&mut self, _context: &mut Context, event: &Event) {
         match event {
             Event::KeyDown { .. } => {
                 println!("on_key_down: {:?}", event);
@@ -39,13 +39,13 @@ impl GameEventHandler for DummyState {
         };
     }
 
-    fn on_key_up(&mut self, context: &mut Context, event: &Event)  {
+    fn on_key_up(&mut self, _context: &mut Context, event: &Event)  {
         println!("on_key_up: {:?}", event);
     }
 
-    fn on_mouse_motion(&mut self, context: &mut Context, event: &Event)  {
+    fn on_mouse_motion(&mut self, _context: &mut Context, event: &Event)  {
         match event {
-            Event::MouseMotion { x, y, mousestate, .. } => {
+            Event::MouseMotion { x, y, .. } => {
                 self.x = *x;
                 self.y = *y;
             },
@@ -53,7 +53,7 @@ impl GameEventHandler for DummyState {
         };
     }
 
-    fn on_mouse_button_down(&mut self, context: &mut Context, event: &Event)  {
+    fn on_mouse_button_down(&mut self, _context: &mut Context, event: &Event)  {
         if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = true;
@@ -61,21 +61,29 @@ impl GameEventHandler for DummyState {
         }
     }
 
-    fn on_mouse_button_up(&mut self, context: &mut Context, event: &Event)  {
-        if let Event::MouseButtonUp{ mouse_btn, .. } = event {
+    fn on_mouse_button_up(&mut self, _context: &mut Context, event: &Event)  {
+        if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = false;
             }
         }
     }
 
-    fn on_mouse_wheel(&mut self, context: &mut Context, event: &Event)  {
+    fn on_mouse_wheel(&mut self, _context: &mut Context, event: &Event)  {
         println!("on_mouse_wheel: {:?}", event);
+    }
+
+    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {
+
+    }
+
+    fn on_collision_end(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {
+
     }
 }
 
 impl GameState for DummyState {
-    fn update(&mut self, context: &mut Context) -> Result<(), String> {
+    fn update(&mut self, _context: &mut Context) -> Result<(), String> {
         Ok(())
     }
 
@@ -87,8 +95,7 @@ impl GameState for DummyState {
             context.window.get_canvas_mut().set_draw_color(
                 Color::RGB(255, 255, 255)
             );
-            context.window.get_canvas_mut().draw_rect(rect);
-            context.window.get_canvas_mut().fill_rect(rect);
+            context.window.get_canvas_mut().fill_rect(rect)?;
 
             context.window.get_canvas_mut().set_draw_color(curr_color);
         }

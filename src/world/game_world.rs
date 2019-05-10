@@ -1,12 +1,12 @@
 use nphysics2d::world::World;
-use nphysics2d::object::{
-    ColliderDesc,
-    RigidBody,
-    RigidBodyDesc
-};
+use nphysics2d::object::ColliderHandle;
+
 
 pub type N = f64;
 pub type GameWorld = World<N>;
-pub type GameRigidBodyDesc<'a> = RigidBodyDesc<'a, N>;
-pub type GameRigidBody = RigidBody<N>;
-pub type GameColliderDesc = ColliderDesc<N>;
+
+#[derive(Debug)]
+pub enum GameCollisionEvent {
+    CollisionStart(ColliderHandle, ColliderHandle),
+    CollisionEnd(ColliderHandle, ColliderHandle),
+}

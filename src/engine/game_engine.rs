@@ -1,3 +1,4 @@
+use fps_clock::FpsClock;
 use sdl2;
 
 use super::context::Context;
@@ -13,6 +14,7 @@ pub struct GameEngine {
     pub events: Box<GameEvents>,
     pub sdl_context: sdl2::Sdl,
     pub context: Context,
+    fps: u32,
 }
 
 pub struct GameEngineBuilder {
@@ -20,6 +22,7 @@ pub struct GameEngineBuilder {
     width: u32,
     height: u32,
     world: GameWorld,
+    fps: u32,
 }
 
 impl GameEngine {
@@ -29,11 +32,9 @@ impl GameEngine {
     // and (eventually) variable or fixed
 
     pub fn run<T: GameState>(&mut self, game_state: &mut T) -> Result<(), String> {
-        loop {
-            //let mut context = self.context;
-            //let world = &mut context.world;
-            // let game_state = &mut self.game_state;
+        let mut fps = FpsClock::new(self.fps);
 
+        loop {
             self.events.process_sdl_events(game_state, &mut self.context)?;
             // TODO(#20): Use FPS (as current rendering is variable)
 
@@ -47,6 +48,9 @@ impl GameEngine {
             self.context.window.get_canvas_mut().clear();
             game_state.draw(&mut self.context)?;
             self.context.window.get_canvas_mut().present();
+
+            fps.tick();
+            //println!("last_tick: {}", last_tick / 1_000_000.);
         }
     }
 
@@ -69,12 +73,13 @@ impl GameEngineBuilder {
     ///
     /// # Returns
     /// Result<Self, String>
-    pub fn new(title: &str, width: u32, height: u32) -> Self {
+    pub fn new(title: &str, width: u32, height: u32, fps: u32) -> Self {
         Self {
             title: title.to_string(),
             width,
             height,
             world: GameWorld::new(),
+            fps,
         }
     }
 
@@ -97,6 +102,7 @@ impl GameEngineBuilder {
             events: Box::new(events),
             sdl_context,
             context: Context::new(window, self.world),
+            fps: self.fps,
         })
     }
 }

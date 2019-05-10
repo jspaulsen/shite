@@ -3,4 +3,4 @@ pub mod state;
 pub mod trackable;
 pub mod graphics;
 
-mod world;
+pub mod world;
