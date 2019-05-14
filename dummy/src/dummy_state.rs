@@ -8,7 +8,8 @@ use shite::engine::Context;
 use shite::graphics::GameTextureCreator;
 use shite::state::{
     GameState,
-    GameEventHandler,
+    GameInputHandler,
+    GamePhysicsHandler,
 };
 
 pub struct DummyState {
@@ -29,7 +30,7 @@ impl DummyState {
     }
 }
 
-impl GameEventHandler for DummyState {
+impl GameInputHandler for DummyState {
     fn on_key_down(&mut self, _context: &mut Context, event: &Event) {
         match event {
             Event::KeyDown { .. } => {
@@ -72,14 +73,12 @@ impl GameEventHandler for DummyState {
     fn on_mouse_wheel(&mut self, _context: &mut Context, event: &Event)  {
         println!("on_mouse_wheel: {:?}", event);
     }
+}
 
-    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {
+impl GamePhysicsHandler for DummyState {
+    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
 
-    }
-
-    fn on_collision_end(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {
-
-    }
+    fn on_collision_end(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
 }
 
 impl GameState for DummyState {

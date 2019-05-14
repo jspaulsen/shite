@@ -21,8 +21,9 @@ use shite::engine::Context;
 use shite::graphics::GameTextureCreator;
 use shite::state::{
     GameState,
-    GameEventHandler,
+    GameInputHandler,
     GameObjectStore,
+    GamePhysicsHandler,
     PhysicsObjectMap,
 };
 
@@ -62,11 +63,11 @@ impl BoxState {
     }
 }
 
-impl GameEventHandler for BoxState {
+impl GameInputHandler for BoxState {
     fn on_key_down(&mut self, context: &mut Context, event: &Event) {
         if let Event::KeyDown { keycode: Some(Keycode::A), .. } = event {
             for (body, _) in self.game_objects.get_objects_mut() {
-                let mut rigid_body = context.world.rigid_body_mut(*body).expect("Unwrapping body from nphysics world.");
+                let rigid_body = context.world.rigid_body_mut(*body).expect("Unwrapping body from nphysics world.");
                 let veloc = rigid_body.velocity();
                 let add_x = if veloc.linear.x > 0.0 { 100.0 } else { -100.0 };
                 let add_y = if veloc.linear.y > 0.0 { 100.0 } else { -100.0 };
@@ -113,8 +114,10 @@ impl GameEventHandler for BoxState {
     fn on_mouse_button_up(&mut self, context: &mut Context, event: &Event)  {}
 
     fn on_mouse_wheel(&mut self, context: &mut Context, event: &Event)  {}
+}
 
-    fn on_collision_start(&mut self, context: &mut Context, coh1: ColliderHandle, coh2: ColliderHandle) {}
+impl GamePhysicsHandler for BoxState {
+    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
 
     fn on_collision_end(&mut self, context: &mut Context, coh1: ColliderHandle, coh2: ColliderHandle) {
         let coh_obj1 = context.world.collider(coh1).expect("Expected nphysics to provide a collider object");
@@ -123,7 +126,7 @@ impl GameEventHandler for BoxState {
 }
 
 impl GameState for BoxState {
-    fn update(&mut self, context: &mut Context) -> Result<(), String> {
+    fn update(&mut self, _context: &mut Context) -> Result<(), String> {
         Ok(())
     }
 
@@ -145,7 +148,7 @@ impl GameState for BoxState {
                     object.height,
                 );
 
-                context.window.get_canvas_mut().draw_rect(rect);
+                context.window.get_canvas_mut().draw_rect(rect)?;
             }
         }
         context.window.get_canvas_mut().set_draw_color(curr_color);

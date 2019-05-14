@@ -17,5 +17,5 @@ fn main() {
     let mut context = engine.get_context_mut();
     let mut dummy_state = BoxState::new(&mut context);
 
-    engine.run(&mut dummy_state);
+    engine.run(&mut dummy_state).unwrap();
 }
