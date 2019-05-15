@@ -34,10 +34,10 @@ impl GameEvents {
         for r in remap {
             match r {
                 GameCollisionEvent::CollisionStart(coh1, coh2) => {
-                    game_state.on_collision_start(context, coh1, coh2);
+                    game_state.on_collision_start(context, coh1, coh2)?;
                 },
                 GameCollisionEvent::CollisionEnd(coh1, coh2) => {
-                    game_state.on_collision_end(context, coh1, coh2);
+                    game_state.on_collision_end(context, coh1, coh2)?;
                 },
             }
         }
@@ -56,22 +56,22 @@ impl GameEvents {
                     exit(0);
                 },
                 Event::KeyUp { .. } => {
-                    game_state.on_key_up(context, &event)
+                    game_state.on_key_up(context, &event)?;
                 },
                 Event::KeyDown { .. } => {
-                    game_state.on_key_down(context, &event)
+                    game_state.on_key_down(context, &event)?;
                 },
                 Event::MouseMotion { .. } => {
-                    game_state.on_mouse_motion(context, &event)
+                    game_state.on_mouse_motion(context, &event)?;
                 },
                 Event::MouseButtonDown { .. } => {
-                    game_state.on_mouse_button_down(context, &event)
+                    game_state.on_mouse_button_down(context, &event)?;
                 },
                 Event::MouseButtonUp { .. } => {
-                    game_state.on_mouse_button_up(context, &event)
+                    game_state.on_mouse_button_up(context, &event)?;
                 },
                 Event::MouseWheel { .. } => {
-                    game_state.on_mouse_wheel(context, &event)
+                    game_state.on_mouse_wheel(context, &event)?;
                 }
                 _ => println!("Uncaptured event {:?}", event)
             }

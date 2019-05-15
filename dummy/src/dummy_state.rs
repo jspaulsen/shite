@@ -1,4 +1,4 @@
-use nphysics2d::object::ColliderHandle;
+//use nphysics2d::object::ColliderHandle;
 use sdl2::event::Event;
 use sdl2::mouse::MouseButton;
 use sdl2::pixels::Color;
@@ -31,20 +31,7 @@ impl DummyState {
 }
 
 impl GameInputHandler for DummyState {
-    fn on_key_down(&mut self, _context: &mut Context, event: &Event) {
-        match event {
-            Event::KeyDown { .. } => {
-                println!("on_key_down: {:?}", event);
-            }
-            _ => {}
-        };
-    }
-
-    fn on_key_up(&mut self, _context: &mut Context, event: &Event)  {
-        println!("on_key_up: {:?}", event);
-    }
-
-    fn on_mouse_motion(&mut self, _context: &mut Context, event: &Event)  {
+    fn on_mouse_motion(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
         match event {
             Event::MouseMotion { x, y, .. } => {
                 self.x = *x;
@@ -52,34 +39,32 @@ impl GameInputHandler for DummyState {
             },
             _ => {},
         };
+
+        Ok(())
     }
 
-    fn on_mouse_button_down(&mut self, _context: &mut Context, event: &Event)  {
+    fn on_mouse_button_down(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = true;
             }
         }
+
+        Ok(())
     }
 
-    fn on_mouse_button_up(&mut self, _context: &mut Context, event: &Event)  {
+    fn on_mouse_button_up(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = false;
             }
         }
-    }
 
-    fn on_mouse_wheel(&mut self, _context: &mut Context, event: &Event)  {
-        println!("on_mouse_wheel: {:?}", event);
+        Ok(())
     }
 }
 
-impl GamePhysicsHandler for DummyState {
-    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
-
-    fn on_collision_end(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
-}
+impl GamePhysicsHandler for DummyState {}
 
 impl GameState for DummyState {
     fn update(&mut self, _context: &mut Context) -> Result<(), String> {
