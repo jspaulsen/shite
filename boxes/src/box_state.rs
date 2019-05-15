@@ -1,28 +1,23 @@
 extern crate nalgebra as na;
 
-use std::collections::HashMap;
 use na::Vector2;
 use nphysics2d::algebra::Velocity2;
 use nphysics2d::material::{MaterialHandle, BasicMaterial};
 use ncollide2d::shape::{Cuboid, ShapeHandle};
 use nphysics2d::object::{
-    BodyHandle,
     ColliderHandle,
     ColliderDesc,
-    RigidBodyDesc,
 };
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::mouse::MouseButton;
 use sdl2::pixels::Color;
-use sdl2::rect::{Point, Rect};
+use sdl2::rect::{Rect};
 
 use shite::engine::Context;
-use shite::graphics::GameTextureCreator;
 use shite::state::{
     GameState,
     GameInputHandler,
-    GameObjectStore,
     GamePhysicsHandler,
     PhysicsObjectMap,
 };
@@ -64,7 +59,7 @@ impl BoxState {
 }
 
 impl GameInputHandler for BoxState {
-    fn on_key_down(&mut self, context: &mut Context, event: &Event) {
+    fn on_key_down(&mut self, context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::KeyDown { keycode: Some(Keycode::A), .. } = event {
             for (body, _) in self.game_objects.get_objects_mut() {
                 let rigid_body = context.world.rigid_body_mut(*body).expect("Unwrapping body from nphysics world.");
@@ -80,13 +75,11 @@ impl GameInputHandler for BoxState {
                 );
             }
         }
+
+        Ok(())
     }
 
-    fn on_key_up(&mut self, context: &mut Context, event: &Event)  {}
-
-    fn on_mouse_motion(&mut self, context: &mut Context, event: &Event)  {}
-
-    fn on_mouse_button_down(&mut self, context: &mut Context, event: &Event)  {
+    fn on_mouse_button_down(&mut self, context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, x, y, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 let (win_x, win_y) = context.window.get_canvas_ref().window().size();
@@ -94,8 +87,8 @@ impl GameInputHandler for BoxState {
                 let half_x: u32 = win_x / 2;
                 let half_y: u32 = win_y / 2;
 
-                let veloc_x = if (*x as u32 > half_x) { -1.0 * const_veloc } else { const_veloc };
-                let veloc_y = if (*y as u32 > half_y) { -1.0 * const_veloc } else { const_veloc };
+                let veloc_x = if *x as u32 > half_x { -1.0 * const_veloc } else { const_veloc };
+                let veloc_y = if *y as u32 > half_y { -1.0 * const_veloc } else { const_veloc };
                 let builder = BoxObjectBuilder::new(
                     25,
                     25,
@@ -109,19 +102,17 @@ impl GameInputHandler for BoxState {
                 self.game_objects.add(*object.get_body_handle(), object);
             }
         }
+
+        Ok(())
     }
-
-    fn on_mouse_button_up(&mut self, context: &mut Context, event: &Event)  {}
-
-    fn on_mouse_wheel(&mut self, context: &mut Context, event: &Event)  {}
 }
 
 impl GamePhysicsHandler for BoxState {
-    fn on_collision_start(&mut self, _context: &mut Context, _coh1: ColliderHandle, _coh2: ColliderHandle) {}
+    fn on_collision_end(&mut self, context: &mut Context, coh1: ColliderHandle, coh2: ColliderHandle) -> Result<(), String> {
+        let _coh_obj1 = context.world.collider(coh1).expect("Expected nphysics to provide a collider object");
+        let _coh_obj2 = context.world.collider(coh2).expect("Expected nphysics to provide a collider object");
 
-    fn on_collision_end(&mut self, context: &mut Context, coh1: ColliderHandle, coh2: ColliderHandle) {
-        let coh_obj1 = context.world.collider(coh1).expect("Expected nphysics to provide a collider object");
-        let coh_obj2 = context.world.collider(coh2).expect("Expected nphysics to provide a collider object");
+        Ok(())
     }
 }
 
