@@ -1,9 +1,7 @@
 mod box_state;
 mod box_object;
 
-use uuid::Uuid;
 use shite::engine::{GameEngine, GameEngineBuilder};
-use shite::state::{GameState};
 use box_state::BoxState;
 
 
