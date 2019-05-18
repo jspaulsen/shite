@@ -48,7 +48,6 @@ impl GameEvents {
         let remap: Vec<Event> = self.event_pump.poll_iter().collect();
 
         for event in remap {
-            // TODO(#22): [GameEvents] Implement all events
             match event {
                 Event::Quit {..} => {
                     game_state.on_quit(context, &event);
