@@ -12,9 +12,6 @@ pub struct GameEvents {
     event_pump: EventPump,
 }
 
-// TODO(#17): Track Input (M/KB) state here
-// Track Keyboard and mouse (and maybe joystick) state here
-// as passing KeyboardState as a parameter within match => won't work.
 impl GameEvents {
     pub fn new(event_pump: EventPump) -> Self {
         Self {
