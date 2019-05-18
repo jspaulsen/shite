@@ -8,8 +8,10 @@ use shite::engine::Context;
 use shite::graphics::GameTextureCreator;
 use shite::state::{
     GameState,
+    GameApplicationHandler,
     GameInputHandler,
     GamePhysicsHandler,
+    GameWindowHandler,
 };
 
 pub struct DummyState {
@@ -43,7 +45,7 @@ impl GameInputHandler for DummyState {
         Ok(())
     }
 
-    fn on_mouse_button_down(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
+    fn on_mouse_click(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = true;
@@ -53,7 +55,7 @@ impl GameInputHandler for DummyState {
         Ok(())
     }
 
-    fn on_mouse_button_up(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
+    fn on_mouse_click_release(&mut self, _context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 self.should_render = false;
@@ -64,7 +66,10 @@ impl GameInputHandler for DummyState {
     }
 }
 
+impl GameApplicationHandler for DummyState {}
 impl GamePhysicsHandler for DummyState {}
+impl GameWindowHandler for DummyState {}
+
 
 impl GameState for DummyState {
     fn update(&mut self, _context: &mut Context) -> Result<(), String> {

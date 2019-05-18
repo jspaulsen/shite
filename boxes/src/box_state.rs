@@ -9,7 +9,7 @@ use nphysics2d::object::{
     ColliderDesc,
 };
 use sdl2::event::Event;
-use sdl2::keyboard::Keycode;
+use sdl2::keyboard::{Keycode, KeyboardState};
 use sdl2::mouse::MouseButton;
 use sdl2::pixels::Color;
 use sdl2::rect::{Rect};
@@ -17,8 +17,10 @@ use sdl2::rect::{Rect};
 use shite::engine::Context;
 use shite::state::{
     GameState,
+    GameApplicationHandler,
     GameInputHandler,
     GamePhysicsHandler,
+    GameWindowHandler,
     PhysicsObjectMap,
 };
 
@@ -59,7 +61,7 @@ impl BoxState {
 }
 
 impl GameInputHandler for BoxState {
-    fn on_key_down(&mut self, context: &mut Context, event: &Event) -> Result<(), String> {
+    fn on_key_press(&mut self, context: &mut Context, event: &Event, _kbd_state: &KeyboardState) -> Result<(), String> {
         if let Event::KeyDown { keycode: Some(Keycode::A), .. } = event {
             for (body, _) in self.game_objects.get_objects_mut() {
                 let rigid_body = context.world.rigid_body_mut(*body).expect("Unwrapping body from nphysics world.");
@@ -79,7 +81,7 @@ impl GameInputHandler for BoxState {
         Ok(())
     }
 
-    fn on_mouse_button_down(&mut self, context: &mut Context, event: &Event) -> Result<(), String> {
+    fn on_mouse_click(&mut self, context: &mut Context, event: &Event) -> Result<(), String> {
         if let Event::MouseButtonDown{ mouse_btn, x, y, .. } = event {
             if let MouseButton::Left = mouse_btn {
                 let (win_x, win_y) = context.window.get_canvas_ref().window().size();
@@ -146,3 +148,6 @@ impl GameState for BoxState {
         Ok(())
     }
 }
+
+impl GameApplicationHandler for BoxState {}
+impl GameWindowHandler for BoxState {}
