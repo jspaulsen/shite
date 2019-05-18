@@ -1,10 +1,9 @@
-use std::process::exit;
-
 use ncollide2d::events::{ContactEvent};
 use sdl2::EventPump;
 use sdl2::event::Event;
 
 use super::context::Context;
+//use crate::event::KeyboardEvent;
 use crate::state::GameState;
 use crate::world::GameCollisionEvent;
 
@@ -46,37 +45,51 @@ impl GameEvents {
     }
 
     pub fn process_sdl_events(&mut self, game_state: &mut GameState, context: &mut Context) -> Result<(), String> {
-        for event in self.event_pump.poll_iter() {
+        let remap: Vec<Event> = self.event_pump.poll_iter().collect();
+
+        for event in remap {
             // TODO(#22): [GameEvents] Implement all events
             match event {
-                // TODO(#23): [GameEvents] Route events to higher level
-                // These should be routed to a higher level "Application" level
-                // provided to the game engine on creation
                 Event::Quit {..} => {
-                    exit(0);
+                    game_state.on_quit(context, &event);
                 },
                 Event::KeyUp { .. } => {
-                    game_state.on_key_up(context, &event)?;
+                    game_state.on_key_release(context, &event,  &self.event_pump.keyboard_state())?;
                 },
                 Event::KeyDown { .. } => {
-                    game_state.on_key_down(context, &event)?;
+                    game_state.on_key_press(context, &event, &self.event_pump.keyboard_state())?;
                 },
                 Event::MouseMotion { .. } => {
                     game_state.on_mouse_motion(context, &event)?;
                 },
                 Event::MouseButtonDown { .. } => {
-                    game_state.on_mouse_button_down(context, &event)?;
+                    game_state.on_mouse_click(context, &event)?;
                 },
                 Event::MouseButtonUp { .. } => {
-                    game_state.on_mouse_button_up(context, &event)?;
+                    game_state.on_mouse_click_release(context, &event)?;
                 },
                 Event::MouseWheel { .. } => {
                     game_state.on_mouse_wheel(context, &event)?;
                 }
-                _ => println!("Uncaptured event {:?}", event)
+                _ => {}
             }
         }
 
         Ok(())
     }
 }
+
+/*
+fn on_quit(&mut self, _event: &Event) {
+    exit(0);
+}
+
+/// Called whenever the operating system is terminating the application
+///
+fn on_terminating(&mut self, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_low_memory(&mut self, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+*/
