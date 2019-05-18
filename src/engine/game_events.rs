@@ -53,11 +53,38 @@ impl GameEvents {
                 Event::Quit {..} => {
                     game_state.on_quit(context, &event);
                 },
+                Event::AppTerminating { .. } => {
+                    game_state.on_terminating(context, &event)?;
+                },
+                Event::AppLowMemory { .. } => {
+                    game_state.on_low_memory(context, &event)?;
+                },
+                Event::AppWillEnterBackground { .. } => {
+                    game_state.on_will_enter_background(context, &event)?;
+                },
+                Event::AppDidEnterBackground { .. } => {
+                    game_state.on_entered_background(context, &event)?;
+                },
+                Event::AppWillEnterForeground { .. } => {
+                    game_state.on_will_enter_foreground(context, &event)?;
+                },
+                Event::AppDidEnterForeground { .. } => {
+                    game_state.on_entered_foreground(context, &event)?;
+                },
+                Event::Window { .. } => {
+                    game_state.on_window_event(context, &event)?;
+                }
+                Event::KeyDown { .. } => {
+                    game_state.on_key_press(context, &event, &self.event_pump.keyboard_state())?;
+                },
                 Event::KeyUp { .. } => {
                     game_state.on_key_release(context, &event,  &self.event_pump.keyboard_state())?;
                 },
-                Event::KeyDown { .. } => {
-                    game_state.on_key_press(context, &event, &self.event_pump.keyboard_state())?;
+                Event::TextEditing { .. } => {
+                    game_state.on_text_editing(context, &event)?;
+                },
+                Event::TextInput { .. } => {
+                    game_state.on_text_input(context, &event)?;
                 },
                 Event::MouseMotion { .. } => {
                     game_state.on_mouse_motion(context, &event)?;
@@ -70,7 +97,7 @@ impl GameEvents {
                 },
                 Event::MouseWheel { .. } => {
                     game_state.on_mouse_wheel(context, &event)?;
-                }
+                },
                 _ => {}
             }
         }
@@ -80,16 +107,25 @@ impl GameEvents {
 }
 
 /*
-fn on_quit(&mut self, _event: &Event) {
-    exit(0);
-}
-
-/// Called whenever the operating system is terminating the application
-///
-fn on_terminating(&mut self, _event: &Event) -> Result<(), String> {
+fn on_will_enter_background(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
     Ok(())
 }
-fn on_low_memory(&mut self, _event: &Event) -> Result<(), String> {
+fn on_entered_background(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_will_enter_foreground(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_entered_foreground(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_window_event(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_text_editing(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
+    Ok(())
+}
+fn on_text_input(&mut self, _context: &mut Context, _event: &Event) -> Result<(), String> {
     Ok(())
 }
 */
