@@ -49,7 +49,7 @@ impl GameEngine {
             // update
             game_state.update(&mut self.context)?;
 
-            // TODO: [GameEngine] move rendering from direct gameloop into function
+            // TODO(#29): [GameEngine] move rendering from direct gameloop into function
             // Drop _all_ of the rendering into a separate function,
             // as it's clearly becoming a bit much to maintain in this loop.
             self.context.window.canvas_mut().clear();
