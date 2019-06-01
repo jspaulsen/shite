@@ -1,6 +1,5 @@
-use nphysics2d::world::World;
 use nphysics2d::object::ColliderHandle;
-
+use nphysics2d::world::World;
 
 pub type N = f64;
 pub type GameWorld = World<N>;
