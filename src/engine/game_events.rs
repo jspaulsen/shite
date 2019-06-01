@@ -96,7 +96,7 @@ impl GameEvents {
                 } => {
                     state.on_entered_foreground(ctx, &sdl_app_event_to_lib(&event))?;
                 },
-                // TODO: Implement GameWindowEvent
+                // TODO(#31): Implement GameWindowEvent
                 Event::Window {
                     ..
                 } => {
