@@ -69,7 +69,7 @@ impl GameEngine {
         &mut self.context
     }
 
-    // TODO: [GameEngine] move render_state_ui elsewhere
+    // TODO(#30): [GameEngine] move render_state_ui elsewhere
     fn render_state_ui(game_state: &mut impl GameState, context: &mut WindowContext) -> Result<(), String> {
         let active_ui = game_state.active_ui();
         let creator = context.game_texture_creator();
