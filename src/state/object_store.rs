@@ -1,11 +1,13 @@
+use std::collections::hash_map::{
+    Iter,
+    IterMut,
+};
 use std::collections::HashMap;
-use std::collections::hash_map::{Iter, IterMut};
 
 use nphysics2d::object::BodyHandle;
 use uuid::Uuid;
 
 use crate::trackable::Trackable;
-
 
 // TODO(#24): [GameObjectStore] HashMap is bottleneck
 // Optimize by using Hashbrown or comparable
@@ -18,7 +20,6 @@ pub struct GameObjectStore<T> {
 pub struct PhysicsObjectMap<T> {
     objects: HashMap<BodyHandle, T>,
 }
-
 
 impl<T: Trackable> GameObjectStore<T> {
     pub fn new() -> Self {
