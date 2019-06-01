@@ -37,7 +37,7 @@ impl GameEngine {
         let mut fps = FpsClock::new(self.fps);
 
         loop {
-            // TODO: SDL events are routed to both UI and GameState; this either
+            // TODO(#28): SDL events are routed to both UI and GameState; this either
             // handles that (via the process_sdl_events function) or is broken
             // into two calls
             self.events.process_sdl_events(game_state, &mut self.context)?;
