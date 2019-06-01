@@ -152,7 +152,7 @@ impl UiWindowBuilder {
 // TODO(#34): [UiWindow] introduce relative position functions for building ui
 // Things of this nature would include "middle, top, 50%", etc.
 
-// TODO: [UIWindow] introduce additional widgets and ui elements.
+// TODO(#35): [UIWindow] introduce additional widgets and ui elements.
 // Some of these widgets may include: Text box, label, checkbox, radio button, menus
 impl UiWindow {
     pub fn button(&mut self, x: i32, y: i32, width: u32, height: u32, bg_color: Option<Color>) -> UiHandle {
